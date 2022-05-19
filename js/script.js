@@ -19,9 +19,11 @@ const getTemperature = async (URL) => {
   try {
     const result = await fetch(URL)
     const jsonData = await result.json()
-    console.log(jsonData)
     const temperature = jsonData.main.temp - 273.15
-    document.getElementById("result").innerHTML = "<h5>The current weather is " + temperature.toFixed(0) + "°C</h5>"
+    const feeling = jsonData.weather[0]
+    const image = feeling.icon
+    const status = feeling.main
+    document.getElementById("result").innerHTML = "<h5>The current weather is " + temperature.toFixed(0) + "°C</h5>" + "<img src='http://openweathermap.org/img/wn/" + image + "@2x.png' alt='Weather Icon' width='10%'><br><h5>" + status + "</h5>"
   } catch (error) {
     console.log(error)
     document.getElementById("result").innerHTML = "<h5>An error occured fetching the current weather.</h5>"
